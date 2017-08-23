@@ -213,6 +213,26 @@ defmodule Facebook do
   end
 
   @doc """
+  Gets the Ad Account information for the given act_id.
+
+  ## Examples
+      iex> Facebook.pageFeed("1234567", "name,ads{creative,created_time}")
+
+  See: https://developers.facebook.com/docs/marketing-api/reference/ad-account
+  """
+
+  @spec adAccount(act_id :: String.t, access_token, fields :: String.t) :: Map.t
+  def adAccount(act_id, access_token, fields \\ "")  do
+    params = [access_token: access_token, fields: fields]
+      |> add_app_secret(access_token)
+
+    {_, content} = Facebook.Graph.get(~s(/act_#{act_id}), params)
+
+    content
+  end
+
+  
+  @doc """
   Gets the number of elements that a scope has in a given object.
 
   An *object* stands for: post, comment, link, status update, photo.
