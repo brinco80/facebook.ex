@@ -398,14 +398,14 @@ defmodule Facebook do
   See: https://developers.facebook.com/docs/marketing-api/reference/ad-account
   """
 
-  @spec adAccount(act_id :: String.t, access_token, fields :: String.t) :: Map.t
-  def adAccount(act_id, access_token, fields \\ "")  do
+  @spec ad_account(act_id :: String.t, access_token, fields :: String.t) :: Map.t
+  def ad_account(act_id, access_token, fields \\ "")  do
     params = [access_token: access_token, fields: fields]
       |> add_app_secret(access_token)
 
-    {_, content} = Facebook.Graph.get(~s(/act_#{act_id}), params)
-
-    content
+    ~s(/act_#{act_id})
+    |> GraphAPI.get([], params: params)
+    |> ResponseFormatter.format_response
   end
 
   
