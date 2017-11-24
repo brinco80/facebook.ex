@@ -5,6 +5,7 @@ defmodule Facebook.GraphAPI do
 
   alias Facebook.Config
 
+  def process_url(<<"https://", _rest::binary>> = url), do: url
   def process_url(url), do: Config.graph_url <> url
 
   def process_response_body(body) do
